@@ -139,9 +139,9 @@ func (p *createAPISubcommand) InjectResource(res *resource.Resource) error {
 	// Ensure that external API options cannot be used when creating an API in the project.
 	if p.options.DoAPI {
 		if len(p.options.ExternalAPIPath) != 0 || len(p.options.ExternalAPIDomain) != 0 {
-			return errors.New("Cannot use '--external-api-path' or '--external-api-domain' " +
+			return errors.New("cannot use '--external-api-path' or '--external-api-domain' " +
 				"when creating an API in the project with '--resource=true'. " +
-				"Use '--resource=false' when referencing an external API.")
+				"Use '--resource=false' when referencing an external API")
 		}
 	}
 

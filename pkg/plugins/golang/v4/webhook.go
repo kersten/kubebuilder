@@ -114,8 +114,7 @@ func (p *createWebhookSubcommand) InjectResource(res *resource.Resource) error {
 	p.resource = res
 
 	if len(p.options.ExternalAPIPath) != 0 && len(p.options.ExternalAPIDomain) != 0 && p.isLegacyPath {
-		return errors.New("You cannot scaffold webhooks for external types " +
-			"using the legacy path")
+		return errors.New("you cannot scaffold webhooks for external types using the legacy path")
 	}
 
 	for _, spoke := range p.options.Spoke {
