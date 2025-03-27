@@ -55,7 +55,13 @@ func InitCmd(pr *external.PluginRequest) external.PluginResponse {
 	// Here is an example of parsing a flag from a Kubebuilder external plugin request
 	flags := pflag.NewFlagSet("initFlags", pflag.ContinueOnError)
 	flags.String("domain", "example.domain.com", "sets the domain added in the scaffolded initFile.txt")
-	flags.Parse(pr.Args)
+	if err := flags.Parse(pr.Args); err != nil {
+		pluginResponse.Error = true
+		pluginResponse.ErrorMsgs = []string{
+			"failed to parse flags",
+		}
+		return pluginResponse
+	}
 	domain, _ := flags.GetString("domain")
 
 	initFile := templates.NewInitFile(templates.WithDomain(domain))

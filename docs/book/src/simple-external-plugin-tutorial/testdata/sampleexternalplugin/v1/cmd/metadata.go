@@ -41,7 +41,13 @@ func metadataCmd(pr *external.PluginRequest) external.PluginResponse {
 	flagsToParse.Bool("api", false, "sets the api flag to true")
 	flagsToParse.Bool("webhook", false, "sets the webhook flag to true")
 
-	flagsToParse.Parse(pr.Args)
+	if err := flagsToParse.Parse(pr.Args); err != nil {
+		pluginResponse.Error = true
+		pluginResponse.ErrorMsgs = []string{
+			"failed to parse flags",
+		}
+		return pluginResponse
+	}
 
 	initFlag, _ := flagsToParse.GetBool("init")
 	apiFlag, _ := flagsToParse.GetBool("api")
