@@ -38,7 +38,7 @@ type Webhooks struct {
 }
 
 // Validate checks that the Webhooks is valid.
-func (webhooks Webhooks) Validate() error {
+func (webhooks *Webhooks) Validate() error {
 	// Validate the Webhook version
 	if err := validateAPIVersion(webhooks.WebhookVersion); err != nil {
 		return fmt.Errorf("invalid Webhook version: %w", err)
@@ -57,7 +57,7 @@ func (webhooks Webhooks) Validate() error {
 }
 
 // Copy returns a deep copy of the API that can be safely modified without affecting the original.
-func (webhooks Webhooks) Copy() Webhooks {
+func (webhooks *Webhooks) Copy() Webhooks {
 	// Deep copy the Spoke slice
 	var spokeCopy []string
 	if len(webhooks.Spoke) > 0 {
@@ -118,7 +118,7 @@ func (webhooks *Webhooks) Update(other *Webhooks) error {
 }
 
 // IsEmpty returns if the Webhooks' fields all contain zero-values.
-func (webhooks Webhooks) IsEmpty() bool {
+func (webhooks *Webhooks) IsEmpty() bool {
 	return webhooks.WebhookVersion == "" &&
 		!webhooks.Defaulting && !webhooks.Validation &&
 		!webhooks.Conversion && len(webhooks.Spoke) == 0
